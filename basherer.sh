@@ -12,6 +12,11 @@
 # NOTES
 # -----
 #
+#source $HOME/.basherer.sh "$@"
+#bs_initialEnvironmentsSetup "$@"
+#bs_setExecutionPathSecure "/var/www/mywim/extras"
+#bs_checkExecutionPathSecure "$@"
+
 
 # -----------------
 # GENERAL VARIABLES
@@ -50,6 +55,8 @@ BASHERER_INIT_TIME_MIN=`date '+%M'`
 BASHERER_INIT_TIME_SEC=`date '+%S'`
 BASHERER_START_DATE=`date +%Y/%m/%d`
 BASHERER_START_TIME=`date +%H:%M:%S`
+BASHERER_EXECUTION_PATH=`pwd`
+BASHERER_EXECUTION_PATH_SECURE=""
 
 # ---------------------
 # FUNCTION DECLARATIONS
@@ -107,7 +114,7 @@ bs_echoNOTOK()
 bs_checkEnvironmentCliParameter()
 {
 	if [ -z "$1" ]; then
-		echo -e "\n$BASHERER_USAGEMSG"
+		bs_echoWarning "$BASHERER_USAGEMSG"
 		bs_aborting
 	else
 		BASHERER_ENVIRONMENT=$1
@@ -124,7 +131,7 @@ bs_checkEnvironments()
 		fi
 	done
 	if [ $BASHERER_ENVIRONMENT_OK = 0 ];then
-		echo -e "\n$BASHERER_ENVIRONMENT is not a valid value. Valid Values are DEV|TEST|PROD"
+		bs_echoWarning "$BASHERER_ENVIRONMENT is not a valid value. Valid Values are DEV|TEST|PROD"
 		bs_aborting
 	fi
 }
@@ -154,7 +161,6 @@ bs_areYouSure()
 	if [ "$BASHERER_CONTINUE" = "y" ]; then
 		bs_echoGreen "Continue!"
 	else
-        #bs_echoRed "Aborted"
         bs_aborting
 	fi
 }
@@ -162,12 +168,18 @@ bs_areYouSure()
 bs_correctUsage()
 {
     if [ -z "$1" ]; then
-        showError
-        echo -ne "\n$BASHERER_USAGEMSG\n"
+        bs_echoWarning "$BASHERER_USAGEMSG"
         exit
     else
         BASHERER_ENVIRONMENT=$1
     fi
+}
+
+bs_initialEnvironmentsSetup()
+{
+    bs_checkEnvironmentCliParameter "$@"
+    bs_correctUsage "$@"
+    bs_checkEnvironments
 }
 
 bs_logMessage()
@@ -178,19 +190,25 @@ bs_logMessage()
 bs_echoDateTimeLogFormat()
 {
     ONIBASH_NOW=`date +%Y/%m/%d\ -\ %T.%3N`
-    echo -ne "\n[$ONIBASH_NOW] "
+    echo -ne "[$ONIBASH_NOW] "
+}
+
+bs_echoSuccess()
+{
+    bs_echoDateTimeLogFormat
+    bs_echoGreen "[INFO] $1"
 }
 
 bs_echoInfo()
 {
     bs_echoDateTimeLogFormat
-    echo -ne "[INFO] $1"
+    bs_echoBlue "[INFO] $1"
 }
 
 bs_echoWarning()
 {
     bs_echoDateTimeLogFormat
-    echo -ne "[WARNING] $1"
+    bs_echoYellow "[WARNING] $1"
 }
 
 bs_echoPoweredByBasherer()
@@ -198,10 +216,21 @@ bs_echoPoweredByBasherer()
     bs_echoCyan "Powered by Basherer v.$BASHERER_VERSION"
 }
 
-bs_initialEnvironmentsSetup
+bs_checkExecutionPathSecure()
 {
-    bs_correctUsage
-    bs_checkEnvironments
+    bs_echoInfo "Execution Path: $BASHERER_EXECUTION_PATH"
+    if [[ "$BASHERER_EXECUTION_PATH" == *"$BASHERER_EXECUTION_PATH_SECURE" ]]; then
+        bs_echoInfo "Execution is correctly located in $BASHERER_EXECUTION_PATH"
+    else
+        bs_echoWarning "We are not in the correct path to execute: $BASHERER_EXECUTION_PATH_SECURE."
+        bs_aborting
+    fi
+}
+
+bs_setExecutionPathSecure()
+{
+    BASHERER_EXECUTION_PATH_SECURE=$1
+    bs_echoInfo "Execution Path Secure set to: $BASHERER_EXECUTION_PATH"
 }
 
 clear
