@@ -4,7 +4,7 @@
 # --------------------
 #	@author:		Daniel Pérez Rodríguez
 #	@contact:
-#	@link:
+#	@link:          https://github.com/DaniTeleco/basherer/
 #	@license:
 #	@version $Id: 	1.0
 
@@ -12,22 +12,46 @@
 # NOTES
 # -----
 #
-#source $HOME/.basherer.sh "$@"
-#bs_initialEnvironmentsSetup "$@"
-#bs_setExecutionPathSecure "/var/www/mywim/extras"
-#bs_checkExecutionPathSecure "$@"
+# ------------
+# INSTALLATION
+# ------------
+#   cd $HOME
+#   wget https://raw.githubusercontent.com/DaniTeleco/basherer/main/basherer.sh
+#
+#
+#
+# ------------------
+# SYSTEM INTEGRATION
+# ------------------
+#
+#   For custom users:
+#
+#      ln -s /route/to/your/file/basherer.sh $HOME/.basherer.sh
+#
+#   For ALL users:
+#
+#
+# -----
+# USAGE
+# -----
+#   Include the next lines at the beggining of your scripts:
 
-
-# -----------------
-# GENERAL VARIABLES
-# -----------------
+#   #!/bin/bash
+#   source $HOME/.basherer.sh "$@"
+#   bs_initialEnvironmentsSetup "$@"                    # [Optional]
+#   bs_setExecutionPathSecure "/var/www/mywim/extras"   # [Optional]
+#   bs_checkExecutionPathSecure "$@"                    # [Optional]
+#
+#
+# ------------------
+# BASHERER VARIABLES
+# ------------------
 # Common Variables
-
 BASHERER_VERSION="1.0"
 BASHERER_AUTHOR="Daniel Pérez Rodríguez"
 BASHERER_AUTHOR_CONTACT="dpr.1980@gmail.com"
 BASHERER_BASH_VERSION="4.3"
-
+# ANSI Color Codes Variables
 BASHERER_RED_B='\e[1;91m'
 BASHERER_GREEN_B='\e[1;92m'
 BASHERER_YELLOW_B='\e[1;93m'
@@ -36,16 +60,13 @@ BASHERER_PURPLE_B='\e[1;95m'
 BASHERER_CYAN_B='\e[1;96m'
 BASHERER_WHITE_B='\e[1;97m'
 BASHERER_RESET='\e[0m'
-
 # Environment values DEV|TEST|PROD
 BASHERER_ENVIRONMENTS="DEV TEST PROD"
 BASHERER_ENVIRONMENT=$1
 BASHERER_ENVIRONMENT_OK=0
 BASHERER_USAGEMSG="[ERROR] Correct Usage: bash $0 DEV|TEST|PROD"
-
 # Runtime Variables
 BASHERER_START_PATH=`pwd`
-
 BASHERER_INIT_DATE_DAY=`date '+%d'`
 BASHERER_INIT_DATE_MONTH_NAME=`date '+%B'`
 BASHERER_INIT_DATE_MONTH=`date '+%m'`
@@ -61,7 +82,7 @@ BASHERER_EXECUTION_PATH_SECURE=""
 # ---------------------
 # FUNCTION DECLARATIONS
 # ---------------------
-# echo and print functions
+# Basic echo functions
 bs_echoRed() { echo -e "${BASHERER_RED_B}${1}${BASHERER_RESET}"; }
 bs_echoGreen() { echo -e "${BASHERER_GREEN_B}${1}${BASHERER_RESET}"; }
 bs_echoYellow() { echo -e "${BASHERER_YELLOW_B}${1}${BASHERER_RESET}"; }
@@ -69,7 +90,7 @@ bs_echoBlue() { echo -e "${BASHERER_BLUE_B}${1}${BASHERER_RESET}"; }
 bs_echoPurple() { echo -e "${BASHERER_PURPLE_B}${1}${BASHERER_RESET}"; }
 bs_echoCyan() { echo -e "${BASHERER_CYAN_B}${1}${BASHERER_RESET}"; }
 bs_echoWhite() { echo -e "${BASHERER_WHITE_B}${1}${BASHERER_RESET}"; }
-
+# Figlet (echo) functions
 bs_echoBigRed() { TEXT=`figlet -k -w 200 "${1}"` && echo -e "${BASHERER_RED_B}${TEXT}${BASHERER_RESET}"; }
 bs_echoBigGreen() { TEXT=`figlet -k -w 200 "${1}"`  && echo -e "${BASHERER_GREEN_B}${TEXT}${BASHERER_RESET}"; }
 bs_echoBigYellow() { TEXT=`figlet -k -w 200 "${1}"` && echo -e "${BASHERER_YELLOW_B}${TEXT}${BASHERER_RESET}"; }
@@ -77,6 +98,7 @@ bs_echoBigBlue() { TEXT=`figlet -k -w 200 "${1}"` && echo -e "${BASHERER_BLUE_B}
 bs_echoBigPurple() { TEXT=`figlet -k -w 200 "${1}"` && echo -e "${BASHERER_PURPLE_B}${TEXT}${BASHERER_RESET}"; }
 bs_echoBigCyan() { TEXT=`figlet -k -w 200 "${1}"` && echo -e "${BASHERER_CYAN_B}${TEXT}${BASHERER_RESET}"; }
 bs_echoBigWhite() { TEXT=`figlet -k -w 200 "${1}"` && echo -e "${BASHERER_WHITE_B}${TEXT}${BASHERER_RESET}"; }
+# System and Exit Control functions
 
 bs_aborting()
 {
@@ -233,6 +255,7 @@ bs_setExecutionPathSecure()
     bs_echoInfo "Execution Path Secure set to: $BASHERER_EXECUTION_PATH"
 }
 
+# Start script with BASHERER
 clear
 bs_echoPoweredByBasherer
 #bs_initialEnvironmentsSetup
