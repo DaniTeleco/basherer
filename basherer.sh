@@ -2,12 +2,12 @@
 # --------------------
 # basherer.sh
 # --------------------
-#	@author:		Daniel Pérez Rodríguez
-#	@contact:
-#	@link:          https://github.com/DaniTeleco/basherer/
-#	@license:
+#	@author:	Daniel Pérez Rodríguez
+#	@contact:	dpr.1980@gmail.com
+#	@link:		https://github.com/DaniTeleco/basherer/
+#	@license:	http://www.apache.org/licenses/LICENSE-2.0
 #	@version $Id: 	1.0
-
+#
 # -----
 # NOTES
 # -----
@@ -38,9 +38,9 @@
 
 #   #!/bin/bash
 #   source $HOME/.basherer.sh "$@"
-#   bs_initialEnvironmentsSetup "$@"                    # [Optional]
-#   bs_setExecutionPathSecure "/var/www/mywim/extras"   # [Optional]
-#   bs_checkExecutionPathSecure "$@"                    # [Optional]
+#   bs_initialEnvironmentsSetup "$@"                    					# [Optional]
+#   bs_setExecutionPathSecure "/some/path/you/need/to/be/sure/command/has/to/be/executed/in"	# [Optional]
+#   bs_checkExecutionPathSecure "$@"                    					# [Optional]
 #
 #
 # ------------------
