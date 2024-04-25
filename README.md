@@ -32,3 +32,15 @@ bs_checkExecutionPathSecure "$@"                    					# [Optional]
 ```bash
 echo "source $HOME/.basherer.sh \"$@\"" >> $HOME\.bashrc
 ```
+
+## TODOs
+
+* Installation Script | Update Script checking version
+* Modular Architecture
+* Custom parameters like show "Powered by Basherer" and so on
+* Adding buy me a coffee :-D
+* New Modules to come:
+  * Strings
+  * Files
+  * Hardware Monitor
+  * ReadableDmesg
