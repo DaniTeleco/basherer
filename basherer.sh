@@ -76,6 +76,7 @@ BASHERER_INIT_TIME_MIN=`date '+%M'`
 BASHERER_INIT_TIME_SEC=`date '+%S'`
 BASHERER_START_DATE=`date +%Y/%m/%d`
 BASHERER_START_TIME=`date +%H:%M:%S`
+BASHERER_START_TIME_SECS=`date +%s`
 BASHERER_EXECUTION_PATH=`pwd`
 BASHERER_EXECUTION_PATH_SECURE=""
 
@@ -259,11 +260,16 @@ bs_checkRunningAsRoot()
 {
     if [ `id -u` -ne 0 ]; then 
 	bs_echoWarning "Please run as root ..."
-        bs_aborting
-	
+        bs_aborting	
     else
 	bs_echoInfo "Correctly running as root user"
     fi
+}
+
+bs_executingTime()
+{
+    ACTUAL_TIME_SECS=`date +%s`
+    bs_echoInfo "Executing Time: $((BASHERER_START_TIME_SECS - ACTUAL_TIME_SECS)) secs."
 }
 
 # Start script with BASHERER
