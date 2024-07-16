@@ -255,6 +255,17 @@ bs_setExecutionPathSecure()
     bs_echoInfo "Execution Path Secure set to: $BASHERER_EXECUTION_PATH"
 }
 
+bs_checkRunningAsRoot()
+{
+    if [ `id -u` -ne 0 ]; then 
+	bs_echoWarning "Please run as root ..."
+        bs_aborting
+	
+    else
+	bs_echoInfo "Correctly running as root user"
+    fi
+}
+
 # Start script with BASHERER
 clear
 bs_echoPoweredByBasherer
