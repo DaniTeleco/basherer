@@ -36,6 +36,7 @@ echo "source $HOME/.basherer.sh \"$@\"" >> $HOME\.bashrc
 ## TODOs
 
 * Installation Script | Update Script checking version
+* Add hello world like function showing capabilities
 * Modular Architecture
 * Custom parameters like show "Powered by Basherer" and so on
 * Adding buy me a coffee :-D
