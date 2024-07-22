@@ -269,7 +269,7 @@ bs_checkRunningAsRoot()
 bs_executingTime()
 {
     ACTUAL_TIME_SECS=`date +%s`
-    bs_echoInfo "Executing Time: $((BASHERER_START_TIME_SECS - ACTUAL_TIME_SECS)) secs."
+    bs_echoInfo "Executing Time: $((ACTUAL_TIME_SECS - BASHERER_START_TIME_SECS)) secs."
 }
 
 # Start script with BASHERER
